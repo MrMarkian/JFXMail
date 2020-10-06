@@ -1,5 +1,6 @@
 package com.email;
 
+import com.email.View.ViewFactory;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +15,10 @@ import javafx.stage.Stage;
 public class Launcher extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("View/MainWindow.fxml"));
-
-        Scene scene = new Scene(parent, 600,400);
-
-        primaryStage.setTitle("JFXMail V0.1");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        ViewFactory viewFactory = new ViewFactory(new EmailManager());
+        viewFactory.showLoginWindow();
 
     }
 
