@@ -16,10 +16,11 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("View/LoginWindow.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("View/MainWindow.fxml"));
 
         Scene scene = new Scene(parent, 600,400);
 
+        primaryStage.setTitle("JFXMail V0.1");
         primaryStage.setScene(scene);
         primaryStage.show();
 
