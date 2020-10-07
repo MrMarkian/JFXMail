@@ -24,10 +24,13 @@ public class MainWindowController extends BaseController {
     }
 
     @FXML
-    void optionsAction(ActionEvent event) {
-
+    void optionsAction() {
+        viewFactory.showOptionsWindow();
     }
 
-
+    @FXML
+    void addAccountAction(ActionEvent event) {
+        viewFactory.showLoginWindow();
+    }
 
 }
