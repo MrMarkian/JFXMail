@@ -43,7 +43,9 @@ public class LoginWindowController extends BaseController implements Initializab
                 switch (result){
                     case SUCCESS -> {
                         System.out.println("Login Successful!" + emailAccount);
-                        viewFactory.showMainWindow();
+                        if (!viewFactory.isMainWindowInitalised()) {
+                            viewFactory.showMainWindow();
+                        }
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
                     }

@@ -21,7 +21,8 @@ public class EmailAccount {
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
 
-        properties.put("mail.imaps.ssl.trust", "*"); //Replace this with googles domain ATM is trusting whole world
+        //todo: Replace this with googles domain ATM is trusting whole world
+        properties.put("mail.imaps.ssl.trust", "*"); // see : https://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
         properties.put("mail.imaps.ssl.socketFactory", sf);
 
         properties.put("incomingHost", "imap.gmail.com");

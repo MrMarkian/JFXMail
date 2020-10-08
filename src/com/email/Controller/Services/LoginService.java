@@ -31,6 +31,7 @@ public class LoginService extends Service<EmailLoginResult> {
                     emailAccount.getAddress(),
                     emailAccount.getPassword());
             emailAccount.setStore(store);
+            emailManager.addEmailAccount(emailAccount);
 
         } catch (NoSuchProviderException e){
             System.out.println(e.getMessage());

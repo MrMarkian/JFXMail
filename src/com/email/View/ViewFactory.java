@@ -24,6 +24,8 @@ public class ViewFactory {
     private FontSize fontSize = FontSize.MEDIUM;
     private ArrayList<Stage> activeStages;
 
+    private boolean mainWindowInitalised = false;
+
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
         activeStages = new ArrayList<Stage>();
@@ -79,6 +81,7 @@ public class ViewFactory {
         System.out.println("Show Main Window Called!");
         BaseController controller = new MainWindowController(emailManager,this,"MainWindow.fxml");
         initialiseStage(controller);
+        mainWindowInitalised = true;
     }
 
     public void closeStage(Stage stageToClose){
@@ -104,4 +107,7 @@ public class ViewFactory {
     }
 
 
+    public boolean isMainWindowInitalised() {
+        return mainWindowInitalised;
+    }
 }
