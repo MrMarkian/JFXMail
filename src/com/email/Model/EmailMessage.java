@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import javax.mail.Message;
+import javax.mail.Session;
 import java.util.Date;
 
 public class EmailMessage {
@@ -16,6 +17,7 @@ public class EmailMessage {
     private SimpleObjectProperty<Date> date;
     private boolean isRead;
     private Message message;
+
 
 
     public EmailMessage(String subject, String sender, String recipient, int size, Date date, boolean isRead, Message message){
@@ -77,5 +79,9 @@ public class EmailMessage {
 
     public SimpleObjectProperty<SizeInteger> sizeProperty() {
         return size;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }

@@ -50,6 +50,7 @@ public class MessageRendererService extends Service<Void> {
 
     private boolean isSimpleType(String contentType){
         return contentType.contains("TEXT/HTML") ||
+                contentType.contains("TEXT/plain") ||
                 contentType.contains("mixed") ||
                 contentType.contains("text");
     }
