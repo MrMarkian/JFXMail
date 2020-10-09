@@ -10,5 +10,6 @@ module JFXMail {
     opens com.email;
     opens com.email.View;
     opens com.email.Controller;
+    opens com.email.Model;
 
 }

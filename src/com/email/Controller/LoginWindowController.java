@@ -55,11 +55,6 @@ public class LoginWindowController extends BaseController implements Initializab
 
             });
             }
-
-
-
-
-
             System.out.println("Login Button Pressed");
 
     }
