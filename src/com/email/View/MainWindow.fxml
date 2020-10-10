@@ -68,6 +68,7 @@
                                     <TableColumn fx:id="recipientCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Recipient" />
                                     <TableColumn fx:id="sizeCol" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="-1.0" text="Size" />
                                     <TableColumn fx:id="dateCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Date" />
+                                    <TableColumn fx:id="AttachCol" prefWidth="51.0" text="Attachments" />
                                 </columns>
                                  <opaqueInsets>
                                     <Insets />

@@ -28,6 +28,9 @@ public class ViewFactory {
         activeStages = new ArrayList<Stage>();
     }
 
+    public void setWindowTitle(int windowId, String titleText){
+        activeStages.get(windowId).setTitle(titleText);
+    }
 
 
     private void initialiseStage(BaseController controller) {
@@ -48,6 +51,8 @@ public class ViewFactory {
             stage.setScene(scene);
             stage.show();
             activeStages.add(stage);
+
+
         } else System.out.println("Failed to initialise Window");
     }
 
@@ -62,6 +67,12 @@ public class ViewFactory {
 
     }
 
+    public void showEmailDetailsWindow(){
+        BaseController controller = new EmailDetailsController(emailManager,this,"EmailDetailsWindow.fxml");
+        initialiseStage(controller);
+
+    }
+
     public void showLoginWindow(){
         System.out.println("Show Login Window Called!");
         BaseController controller = new LoginWindowController(emailManager,this,"LoginWindow.fxml");
@@ -72,6 +83,7 @@ public class ViewFactory {
         System.out.println("Show Options Window Called!");
         BaseController controller = new OptionsWindowController(emailManager,this,"OptionsWindow.fxml");
         initialiseStage(controller);
+
     }
 
     public void showMainWindow(){

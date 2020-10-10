@@ -14,8 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -46,6 +48,9 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, Date> dateCol;
 
     @FXML
+    private TableColumn<EmailMessage, Integer> AttachCol;
+
+    @FXML
     private WebView emailWebView;
     @FXML
     private Slider fontSizeSlider;
@@ -62,6 +67,8 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private MenuItem markUnReadMenuItem = new MenuItem("Mark as Unread");
     private MenuItem deleteMessageMenuItem = new MenuItem("Delete Message");
+    private MenuItem showMessageMeniItem = new MenuItem("Show Details");
+
 
     public MainWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
@@ -77,7 +84,11 @@ public class MainWindowController extends BaseController implements Initializabl
         setupMessageRendererService();
         setupMessageSelection();
         setupContextMenus();
+
+
     }
+
+
 
     private void setupContextMenus() {
         //todo: expand this section .. add multiple selections
@@ -88,20 +99,16 @@ public class MainWindowController extends BaseController implements Initializabl
             emailManager.deleteSelectedMessage();
             emailWebView.getEngine().loadContent("");
         });
+        showMessageMeniItem.setOnAction(event -> {
+            viewFactory.showEmailDetailsWindow();
+        });
     }
 
     private void setupMessageSelection() {
         emailsTableView.setOnMouseClicked(event -> {
-            emailViewProgress.setVisible(true);
-            emailWebView.setVisible(false);
-            emailWebView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
-                if(newValue == Worker.State.SUCCEEDED){
-                    emailViewProgress.setVisible(false);
-                    emailWebView.setVisible(true);
-                }
-            });
-
             EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+
+
             if(emailMessage != null){
                 emailManager.setSelectedMessage(emailMessage);
                 if (!emailMessage.isRead()){
@@ -109,6 +116,20 @@ public class MainWindowController extends BaseController implements Initializabl
                 }
                 messageRendererService.setEmailMessage(emailMessage);
                 messageRendererService.restart();
+            }
+
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                viewFactory.showEmailDetailsWindow();
+            } else {
+                emailViewProgress.setVisible(true);
+                emailWebView.setVisible(false);
+                emailWebView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+                    if(newValue == Worker.State.SUCCEEDED){
+                        emailViewProgress.setVisible(false);
+                        emailWebView.setVisible(true);
+                    }
+                });
+
             }
         });
     }
@@ -160,8 +181,9 @@ public class MainWindowController extends BaseController implements Initializabl
         recipientCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, String>("recipient"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, SizeInteger>("size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, Date>("date"));
+        AttachCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, Integer>("attachmentCount"));
+        emailsTableView.setContextMenu(new ContextMenu(markUnReadMenuItem,deleteMessageMenuItem, showMessageMeniItem));
 
-        emailsTableView.setContextMenu(new ContextMenu(markUnReadMenuItem,deleteMessageMenuItem));
     }
 
     private void setupEmailsTreeView() {

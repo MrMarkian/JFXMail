@@ -1,0 +1,38 @@
+package com.email.View;
+
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class IconResolver {
+
+    public Node getIconForFolder(String folderName){
+        String lowerCaseFolderName = folderName.toLowerCase();
+        ImageView imageView = null;
+
+        try{
+            if(lowerCaseFolderName.contains("@")){
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("icons/email.png")));
+            } else if(lowerCaseFolderName.contains("inbox")){
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("icons/inbox.png")));
+
+            } else if (lowerCaseFolderName.contains("sent")){
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("icons/sent2.png")));
+            }else if(lowerCaseFolderName.contains("spam")){
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("icons/spam.png")));
+            } else {
+                imageView = new ImageView(new Image(getClass().getResourceAsStream("icons/folder.png")));
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+       if(imageView != null) {
+           imageView.setFitHeight(18);
+           imageView.setFitWidth(18);
+       }
+        return imageView;
+    }
+
+}

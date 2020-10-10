@@ -42,8 +42,7 @@ public class EmailTreeItem<String> extends TreeItem<String> {
         boolean messageIsRead = message.getFlags().contains(Flags.Flag.SEEN);
 
         EmailMessage emailMessage = new EmailMessage(message.getSubject(), message.getFrom()[0].toString(), message.getRecipients(MimeMessage.RecipientType.TO)[0].toString(), message.getSize(), message.getSentDate(),messageIsRead, message);
-
-        if(messageIsRead){
+         if(messageIsRead){
             incrementMessagesCount();
         }
         return emailMessage;

@@ -9,6 +9,7 @@ import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
 import java.io.IOException;
 
 public class MessageRendererService extends Service<Void> {
@@ -31,26 +32,42 @@ public class MessageRendererService extends Service<Void> {
 
     private void loadMessage() throws MessagingException, IOException {
         buffer.setLength(0); // clear buffer
+        emailMessage.getAttachmentList().clear();
         Message message = emailMessage.getMessage();
         String contentType = message.getContentType();
         if(isSimpleType(contentType)){
             buffer.append(message.getContent().toString());
         } else if (isMultiPart(contentType)){
             Multipart multipart = (Multipart) message.getContent();
-            for (int i = multipart.getCount() -1; i>=0; i--){
-                BodyPart bodyPart = multipart.getBodyPart(i);
-                String bodyPartContentType = bodyPart.getContentType();
-                if(isSimpleType(bodyPartContentType)){
-                    buffer.append(bodyPart.getContent().toString());
-                } //Todo: Shouldn't this have an else case?
-            }
+            loadMultipart(multipart, buffer);
         }
 
     }
 
+    private void loadMultipart(Multipart multipart, StringBuffer buffer) throws MessagingException, IOException {
+        for (int i = multipart.getCount() -1; i>=0; i--){
+            BodyPart bodyPart = multipart.getBodyPart(i);
+            String bodyPartContentType = bodyPart.getContentType();
+            if(isSimpleType(bodyPartContentType)){
+                buffer.append(bodyPart.getContent().toString());
+            } else if (isMultiPart(bodyPartContentType)){
+                Multipart multipart1 = (Multipart) bodyPart.getContent();
+                loadMultipart(multipart1, buffer);
+            } else if (!isTextPLain(bodyPartContentType)){
+                MimeBodyPart mimeBodyPart = (MimeBodyPart) bodyPart;
+                emailMessage.addAttachment(mimeBodyPart);
+            }
+        }
+
+
+    }
+
+    private boolean isTextPLain(String contentType){
+        return  contentType.contains("TEXT/PLAIN");
+    }
+
     private boolean isSimpleType(String contentType){
         return contentType.contains("TEXT/HTML") ||
-                contentType.contains("TEXT/plain") ||
                 contentType.contains("mixed") ||
                 contentType.contains("text");
     }
@@ -59,7 +76,7 @@ public class MessageRendererService extends Service<Void> {
         return contentType.contains("multipart");
     }
 
-    private void displayMessage(){
+    public void displayMessage(){
         webEngine.loadContent(buffer.toString());
     }
 

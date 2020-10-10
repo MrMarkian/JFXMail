@@ -36,13 +36,13 @@ public class EmailAccount {
         properties.put("mail.imaps.ssl.trust", "*"); // see : https://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
         properties.put("mail.imaps.ssl.socketFactory", sf);
 
-        properties.put("incomingHost", "imap.mail.com");
+        properties.put("incomingHost", "imap.gmail.com");
         properties.put("mail.store.protocol", "imaps");
 
         properties.put("mail.transport.protocol", "smtps");
-        properties.put("mail.smtps.host", "smtp.mail.com");
+        properties.put("mail.smtps.host", "smtp.gmail.com");
         properties.put("mail.smtps.auth", "true");
-        properties.put("outgoingHost", "smtp.mail.com");
+        properties.put("outgoingHost", "smtp.gmail.com");
     }
 
     public Properties getProperties() {
