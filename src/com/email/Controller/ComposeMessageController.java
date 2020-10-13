@@ -13,9 +13,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ComposeMessageController extends BaseController implements Initializable {
@@ -26,6 +30,8 @@ public class ComposeMessageController extends BaseController implements Initiali
     @FXML
     private TextField recipientTextField;
 
+    private List<File>  fileList = new ArrayList<File>();
+
     @FXML
     private TextField subjectTextField;
 
@@ -34,6 +40,9 @@ public class ComposeMessageController extends BaseController implements Initiali
 
     @FXML
     private Button sendButton;
+
+    @FXML
+    private Button attachButton;
 
     @FXML
     private Label errorLabel;
@@ -47,7 +56,8 @@ public class ComposeMessageController extends BaseController implements Initiali
                 emailAccountChoice.getValue(),
                 subjectTextField.getText(),
                 recipientTextField.getText(),
-                htmlEditor.getHtmlText());
+                htmlEditor.getHtmlText(),
+                fileList);
 
         senderService.start();
         senderService.setOnSucceeded(event -> {
@@ -69,4 +79,14 @@ public class ComposeMessageController extends BaseController implements Initiali
         emailAccountChoice.setItems(emailManager.getEmailAccounts());
         emailAccountChoice.setValue(emailManager.getEmailAccounts().get(0));
     }
+
+    @FXML
+    void attachButtonPressed(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null){
+          fileList.add(selectedFile);
+        }
+    }
+
 }

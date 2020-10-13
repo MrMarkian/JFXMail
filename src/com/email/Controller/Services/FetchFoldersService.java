@@ -1,14 +1,12 @@
 package com.email.Controller.Services;
 
+import com.email.Model.Contact;
 import com.email.Model.EmailTreeItem;
 import com.email.View.IconResolver;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Store;
+import javax.mail.*;
 import javax.mail.event.MessageCountEvent;
 import javax.mail.event.MessageCountListener;
 import java.util.List;
@@ -20,6 +18,10 @@ public class FetchFoldersService extends Service<Void> {
     private List<Folder> folderList;
 
     private IconResolver iconResolver = new IconResolver();
+
+
+
+
 
 
 
@@ -99,7 +101,20 @@ public class FetchFoldersService extends Service<Void> {
                             folder.open(Folder.READ_WRITE);
                             int folderSize = folder.getMessageCount();
                             for(int i = folderSize; i > 0 ; i-- ){
-                                emailTreeItem.addEmail(folder.getMessage(i));
+                                Message tmpMessage = folder.getMessage(i);
+                                emailTreeItem.addEmail(tmpMessage);
+
+
+                                for (Address address: tmpMessage.getFrom()) {
+                                        Contact tmpContact = new Contact(address);
+                                    if(!ContactsService.getContactList().contains(tmpContact)){
+                                        try {
+                                            ContactsService.getContactList().add(tmpContact);
+
+                                        } catch (Exception e){System.out.println(e.getMessage());}
+                                    }
+
+                                }
 
                             }
                         }

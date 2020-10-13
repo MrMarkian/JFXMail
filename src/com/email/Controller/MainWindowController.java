@@ -1,13 +1,17 @@
 package com.email.Controller;
 
+import com.email.Controller.Services.ContactsService;
 import com.email.Controller.Services.MessageRendererService;
 import com.email.EmailManager;
+import com.email.Model.Contact;
 import com.email.Model.EmailMessage;
 import com.email.Model.EmailTreeItem;
 import com.email.Model.SizeInteger;
 import com.email.View.ViewFactory;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +32,8 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     private TreeView<String> emailsTreeView;
+
+    private ContactsService contactsService;
 
     @FXML
     private TableView<EmailMessage> emailsTableView;
@@ -60,7 +66,11 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     private ProgressBar emailViewProgress;
+    @FXML
+    private Button autoScanButton;
 
+    @FXML
+    private ListView<Contact> contactsListBox;
 
 
     private MessageRendererService messageRendererService;
@@ -84,10 +94,27 @@ public class MainWindowController extends BaseController implements Initializabl
         setupMessageRendererService();
         setupMessageSelection();
         setupContextMenus();
+        setupContactsPage();
 
 
     }
 
+    private void setupContactsPage() {
+
+        ContactsService.getContactList().addListener(new ListChangeListener<Contact>() {
+            @Override
+            public void onChanged(Change<? extends Contact> c) {
+                while (c.next()) {
+                    if (c.wasRemoved()) {
+                        break;
+                    }
+                    if (c.wasAdded()) {
+                        autoScanForContacts();
+                    }
+                }
+            }
+        });
+    }
 
 
     private void setupContextMenus() {
@@ -211,4 +238,13 @@ public class MainWindowController extends BaseController implements Initializabl
     void  TextSizeSliderChange (MouseEvent event){
         emailWebView.setFontScale(TextSizeSlider.getValue());
     }
+
+    @FXML
+    void autoScanForContacts() {
+        contactsListBox.getItems().clear();
+
+        SortedList<Contact> sortedList = new SortedList<Contact>(ContactsService.getContactList());
+        contactsListBox.setItems(ContactsService.getContactList());
+    }
+
 }

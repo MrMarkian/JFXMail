@@ -4,7 +4,6 @@ import com.email.Model.EmailMessage;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.web.WebEngine;
-
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -63,17 +62,20 @@ public class MessageRendererService extends Service<Void> {
     }
 
     private boolean isTextPLain(String contentType){
-        return  contentType.contains("TEXT/PLAIN");
+        return  contentType.toLowerCase().contains("text/plain");
     }
 
     private boolean isSimpleType(String contentType){
-        return contentType.contains("TEXT/HTML") ||
-                contentType.contains("mixed") ||
-                contentType.contains("text");
+        return
+                contentType.toLowerCase().contains("text") ||
+                contentType.toLowerCase().contains("richtext");
+
     }
 
     private boolean isMultiPart(String contentType){
-        return contentType.contains("multipart");
+        return
+                contentType.contains("multipart");
+
     }
 
     public void displayMessage(){

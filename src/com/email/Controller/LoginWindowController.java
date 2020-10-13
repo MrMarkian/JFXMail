@@ -6,9 +6,7 @@ import com.email.View.ViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -26,6 +24,25 @@ public class LoginWindowController extends BaseController implements Initializab
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private TextField incomingHostField;
+
+    @FXML
+    private TextField outgoingHostField;
+
+    @FXML
+    private CheckBox incomingSSLCheckBox;
+
+    @FXML
+    private CheckBox outgoingSSLCheckBox;
+
+    @FXML
+    private CheckBox useCompressionCheckBox;
+
+    @FXML
+
+    private Slider compressionLevelSlider;
+
     public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
     }
@@ -34,7 +51,7 @@ public class LoginWindowController extends BaseController implements Initializab
     void loginButtonPressed(ActionEvent event) throws GeneralSecurityException {
 
         if(fieldsAreValid()){
-            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
+            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText(),incomingHostField.getText(),outgoingHostField.getText(),incomingSSLCheckBox.isSelected(), outgoingSSLCheckBox.isSelected(), useCompressionCheckBox.isSelected(), (int) compressionLevelSlider.getValue());
             LoginService loginService = new LoginService(emailAccount, emailManager);
             loginService.start();
             loginService.setOnSucceeded(e -> {

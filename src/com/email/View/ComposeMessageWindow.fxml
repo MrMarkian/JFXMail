@@ -11,12 +11,14 @@
    <children>
       <Label layoutX="29.0" layoutY="80.0" text="Recipient" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="80.0" />
       <Label layoutX="34.0" layoutY="112.0" text="Subject" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="110.0" />
-      <TextField fx:id="recipientTextField" layoutX="86.0" layoutY="76.0" prefHeight="25.0" prefWidth="476.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="76.0" />
+      <TextField fx:id="recipientTextField" layoutX="86.0" layoutY="76.0" prefHeight="25.0" prefWidth="383.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="76.0" />
       <TextField fx:id="subjectTextField" layoutX="86.0" layoutY="108.0" prefHeight="25.0" prefWidth="476.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="15.0" />
-      <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="19.0" layoutY="152.0" prefHeight="361.0" prefWidth="600.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="150.0" />
-      <Button fx:id="sendButton" layoutX="636.0" layoutY="640.0" mnemonicParsing="false" onAction="#SendButtonPressed" prefHeight="25.0" prefWidth="170.0" text="Send" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="15.0" />
+      <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="19.0" layoutY="143.0" prefHeight="412.0" prefWidth="600.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="140.0" />
+      <Button fx:id="sendButton" layoutX="445.0" layoutY="558.0" mnemonicParsing="false" onAction="#SendButtonPressed" prefHeight="25.0" prefWidth="170.0" text="Send" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="15.0" />
       <Label fx:id="errorLabel" layoutX="22.0" layoutY="14.0" prefHeight="17.0" prefWidth="591.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <Label layoutX="32.0" layoutY="46.0" text="Account" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="46.0" />
       <ChoiceBox fx:id="emailAccountChoice" layoutX="85.0" layoutY="42.0" prefHeight="25.0" prefWidth="476.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="42.0" />
+      <Button fx:id="attachButton" layoutX="23.0" layoutY="558.0" mnemonicParsing="false" onAction="#attachButtonPressed" prefHeight="25.0" prefWidth="121.0" text="Attach Files" />
+      <Button layoutX="495.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Address Book" />
    </children>
 </AnchorPane>

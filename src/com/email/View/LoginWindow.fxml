@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -23,5 +25,21 @@
       <TextField fx:id="emailAddressField" layoutX="151.0" layoutY="56.0" prefHeight="25.0" prefWidth="433.0" />
       <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="92.0" prefHeight="25.0" prefWidth="433.0" />
       <Label fx:id="errorLabel" layoutX="50.0" layoutY="183.0" />
+      <Label layoutX="32.0" layoutY="146.0" text="Incoming Host Address">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="incomingHostField" layoutX="32.0" layoutY="179.0" prefHeight="25.0" prefWidth="433.0" />
+      <Label layoutX="32.0" layoutY="221.0" text="Outgoing Host Address">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="outgoingHostField" layoutX="32.0" layoutY="246.0" prefHeight="25.0" prefWidth="433.0" />
+      <CheckBox fx:id="incomingSSLCheckBox" layoutX="219.0" layoutY="150.0" mnemonicParsing="false" selected="true" text="Use SSL" />
+      <CheckBox fx:id="outgoingSSLCheckBox" layoutX="217.0" layoutY="225.0" mnemonicParsing="false" selected="true" text="Use SSL" />
+      <CheckBox fx:id="useCompressionCheckBox" layoutX="32.0" layoutY="298.0" mnemonicParsing="false" selected="true" text="Use Compression" />
+      <Slider fx:id="compressionLevelSlider" layoutX="30.0" layoutY="336.0" majorTickUnit="2.0" max="9.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="9.0" />
    </children>
 </AnchorPane>

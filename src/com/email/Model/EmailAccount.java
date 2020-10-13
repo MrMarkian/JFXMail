@@ -5,6 +5,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 import javax.mail.Session;
 import javax.mail.Store;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class EmailAccount {
@@ -14,7 +15,21 @@ public class EmailAccount {
     private Properties properties;
     private Store store;
 
+    private String incomingHost;
+
+    private String outgoingHost;
+
+    private Boolean incomingUseSSL;
+    private Boolean outgoingUseSSL;
+
+    private AccountType accountType;
+
     private Session session;
+
+    private Boolean useCompression;
+    private int compressionLevel;
+
+    private EmailAccountSettings emailAccountSettings;
 
     public Session getSession() {
         return session;
@@ -24,9 +39,20 @@ public class EmailAccount {
         this.session = session;
     }
 
-    public EmailAccount(String address, String password) throws GeneralSecurityException {
+    public EmailAccount (EmailAccountSettings settings){
+        emailAccountSettings = settings;
+    }
+
+    public EmailAccount(String address, String password, String incomingHost, String outgoingHost, Boolean incomingUseSSL,Boolean outgoingUseSSL, Boolean useCompression, Integer compressionLevel) throws GeneralSecurityException {
+
         this.address = address;
         this.password = password;
+        this.incomingHost = incomingHost;
+        this.outgoingHost = outgoingHost;
+        this.incomingUseSSL = incomingUseSSL;
+        this.outgoingUseSSL = outgoingUseSSL;
+        this.useCompression = useCompression;
+        this.compressionLevel = compressionLevel;
         properties = new Properties();
 
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
@@ -36,13 +62,20 @@ public class EmailAccount {
         properties.put("mail.imaps.ssl.trust", "*"); // see : https://stackoverflow.com/questions/20122099/error-in-javamail-pkix-path-building-failed-unable-to-find-valid-certification
         properties.put("mail.imaps.ssl.socketFactory", sf);
 
-        properties.put("incomingHost", "imap.gmail.com");
+        properties.put("incomingHost", incomingHost);
         properties.put("mail.store.protocol", "imaps");
 
-        properties.put("mail.transport.protocol", "smtps");
-        properties.put("mail.smtps.host", "smtp.gmail.com");
-        properties.put("mail.smtps.auth", "true");
-        properties.put("outgoingHost", "smtp.gmail.com");
+        properties.put("mail.smtp.host", outgoingHost); //SMTP Host
+        properties.put("mail.smtp.socketFactory.port", "465"); //SSL Port
+        properties.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
+        properties.put("mail.smtp.auth", outgoingUseSSL); //Enabling SMTP Authentication
+        properties.put("mail.smtp.port", "465"); //SMTP Port
+
+        if(this.useCompression){
+            properties.put("mail.imap.compress.enable", useCompression);
+            properties.put("mail.imap.compress.level", compressionLevel);
+        }
     }
 
     public Properties getProperties() {
@@ -72,5 +105,61 @@ public class EmailAccount {
     @Override
     public String toString() {
         return address;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public String getIncomingHost() {
+        return incomingHost;
+    }
+
+    public void setIncomingHost(String incomingHost) {
+        this.incomingHost = incomingHost;
+    }
+
+    public String getOutgoingHost() {
+        return outgoingHost;
+    }
+
+    public void setOutgoingHost(String outgoingHost) {
+        this.outgoingHost = outgoingHost;
+    }
+
+    public Boolean getIncomingUseSSL() {
+        return incomingUseSSL;
+    }
+
+    public void setIncomingUseSSL(Boolean incomingUseSSL) {
+        this.incomingUseSSL = incomingUseSSL;
+    }
+
+    public Boolean getOutgoingUseSSL() {
+        return outgoingUseSSL;
+    }
+
+    public void setOutgoingUseSSL(Boolean outgoingUseSSL) {
+        this.outgoingUseSSL = outgoingUseSSL;
+    }
+
+    public Boolean getUseCompression() {
+        return useCompression;
+    }
+
+    public void setUseCompression(Boolean useCompression) {
+        this.useCompression = useCompression;
+    }
+
+    public int getCompressionLevel() {
+        return compressionLevel;
+    }
+
+    public void setCompressionLevel(int compressionLevel) {
+        this.compressionLevel = compressionLevel;
     }
 }
